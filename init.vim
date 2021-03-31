@@ -102,8 +102,8 @@ map <Leader>qa :wqa<CR>
 map <Leader>[ :bprevious<CR>
 map <Leader>] :bnext<CR>
 " Custom yank/p to non-default buffer
-nnoremap <Leader>y "ky
-nnoremap <Leader>p "kp
+map <Leader>y "ky
+map <Leader>p "kp
 map <Leader>D "_dd<CR>
 map <Leader>d "_d<CR>
 map <Leader>t :Ttoggle<CR>
