@@ -101,8 +101,9 @@ map <Leader>w :w<CR>
 map <Leader>qa :wqa<CR>
 map <Leader>[ :bprevious<CR>
 map <Leader>] :bnext<CR>
-map <Leader>p "+p<CR>
-map <Leader>y "+y<CR>
+" Custom yank/p to non-default buffer
+nnoremap <Leader>y "ky
+nnoremap <Leader>p "kp
 map <Leader>D "_dd<CR>
 map <Leader>d "_d<CR>
 map <Leader>t :Ttoggle<CR>
@@ -216,6 +217,7 @@ map <Leader><Leader>g :call Refresh()<CR>
 
 " Open Neomake warning/error split
 nnoremap <Leader><Leader>l :lopen<CR>tocmd! BufWritePost * Neomake
+
 
 " some built in keybindings for included plugins
 "
