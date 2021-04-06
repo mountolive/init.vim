@@ -141,6 +141,9 @@ nnoremap <Leader>tl :call neoterm#clear()<cr>
 map <Leader><Leader>h :set hlsearch!<CR>
 map <Leader><Leader>j :set hlsearch<CR>
 
+" format json
+map <Leader>Z :%!jq .<CR>
+
 " regenerate CTAGS - https://github.com/universal-ctags/ctags
 map <Leader>ct :silent !ctags -R --exclude="*min.js"<CR>
 
