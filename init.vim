@@ -358,12 +358,12 @@ let g:terminal_color_15 = '#eeeeec'
 " Plugin's
 """""""""""""""""""""""""
 " Ack.vimm
-cnoreabbrev ag Ack -Q
-cnoreabbrev aG Ack -Q
-cnoreabbrev Ag Ack -Q
-cnoreabbrev AG Ack -Q
-cnoreabbrev F Ack -Q
-cnoreabbrev f Ack -Q
+cnoreabbrev ag Ack! -Q
+cnoreabbrev aG Ack! -Q
+cnoreabbrev Ag Ack! -Q
+cnoreabbrev AG Ack! -Q
+cnoreabbrev F Ack! -Q
+cnoreabbrev f Ack! -Q
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
