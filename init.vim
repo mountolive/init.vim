@@ -69,6 +69,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'myint/clang-complete', { 'for': ['c', 'cpp'] }
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
 " Plug 'vim-scripts/groovy.vim', { 'for': 'groovy' }
 " Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
@@ -165,6 +166,9 @@ map <Leader>v :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 " ADDED FROM OLD VIMRC
 " Go related
 let g:go_fmt_command = "goimports"
+
+" Rust related
+let g:rustfmt_autosave = 1
 
 " Closing after autocomplete
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
