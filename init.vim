@@ -74,6 +74,17 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " Plug 'vim-scripts/groovy.vim', { 'for': 'groovy' }
 " Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
+" After lsp with neovim 0.5.0
+
+" Collection of common configurations for the Nvim LSP client
+Plug 'neovim/nvim-lspconfig'
+
+" Extensions to built-in LSP, for example, providing type inlay hints
+Plug 'nvim-lua/lsp_extensions.nvim'
+
+" Autocompletion framework for built-in LSP
+Plug 'nvim-lua/completion-nvim'
+
 call plug#end()
 
 " set Python
@@ -116,7 +127,8 @@ nnoremap <leader>. :Tags <CR>
 nnoremap <Leader>fu :BTags<Cr>
 nnoremap <C-e> :Buffers<CR>
 " fix method jumping
-nnoremap <buffer><silent> <C-]> :tag <C-R><C-W><CR>
+" nnoremap <buffer><silent> <C-]> :tag <C-R><C-W><CR>
+nnoremap <buffer><silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
 
 " run set tests
 nmap <silent> <leader>R :TestNearest<CR>
@@ -572,6 +584,13 @@ autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
 
 autocmd FileType go set noexpandtab
 autocmd FileType go set nolist
+
+" Rust stuff
+" setup rust_analyzer LSP (IDE features)
+lua require'nvim_lsp'.rust_analyzer.setup{}
+
+" Use LSP omni-completion in Rust files
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 """""""""""""""""""""""""
 " Custom functions
