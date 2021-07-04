@@ -75,7 +75,6 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
 " After lsp with neovim 0.5.0
-
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
 
@@ -585,16 +584,51 @@ autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
 autocmd FileType go set noexpandtab
 autocmd FileType go set nolist
 
+" Pyright
+lua require'lspconfig'.pyright.setup{}
+
+" Gopls with lsp
+lua require'lspconfig'.gopls.setup{}
+
 " Rust stuff
 " setup rust_analyzer LSP (IDE features)
-lua require'nvim_lsp'.rust_analyzer.setup{}
+lua require'lspconfig'.rust_analyzer.setup{}
 
 " Use LSP omni-completion in Rust files
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
+nnoremap <leader><leader>c :call Clippy()<CR>
+
 """""""""""""""""""""""""
 " Custom functions
 """""""""""""""""""""""""
+
+" Exec clippy for rust project
+function! Clippy()
+  let extension = expand('%:e')
+  if extension == 'rs'
+    let file_dir = expand('%:p')
+    let splitted = split(file_dir, '/')
+    let curr_file_dir = join(['/'] + splitted[:-2], '/')
+    let cargo_dir = join([curr_file_dir, 'Cargo.toml'], '/')
+    let iters = 0
+    while !filereadable(cargo_dir) && iters <= 10
+      let splitted = split(curr_file_dir, '/')
+      let curr_file_dir = join(['/'] + splitted[:-2], '/')
+      let cargo_dir = join([curr_file_dir, 'Cargo.toml'], '/')
+      echo cargo_dir
+      let iters += 1
+    endwhile
+    if iters == 11
+      echo 'not a cargo project'
+      return
+    endif
+    silent exe 'cd' curr_file_dir
+    exe "!cargo clippy"
+  else
+    echo 'not a rust file'
+  endif
+endfunction
 
 "Toggle arrow keys
 
