@@ -236,6 +236,8 @@ map <Leader><Leader>g :call Refresh()<CR>
 " Open Neomake warning/error split
 nnoremap <Leader><Leader>l :lopen<CR>tocmd! BufWritePost * Neomake
 
+" Clippy
+nnoremap <leader><leader>c :call Clippy()<CR>
 
 " some built in keybindings for included plugins
 "
@@ -372,6 +374,19 @@ let g:terminal_color_15 = '#eeeeec'
 """""""""""""""""""""""""
 " Plugin's
 """""""""""""""""""""""""
+
+" LSP
+
+" Pyright
+lua require'lspconfig'.pyright.setup{}
+
+" Gopls with lsp
+lua require'lspconfig'.gopls.setup{}
+
+" Rust stuff
+" setup rust_analyzer LSP (IDE features)
+lua require'lspconfig'.rust_analyzer.setup{}
+
 " Ack.vimm
 cnoreabbrev ag Ack! -Q
 cnoreabbrev aG Ack! -Q
@@ -583,21 +598,8 @@ autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
 
 autocmd FileType go set noexpandtab
 autocmd FileType go set nolist
-
-" Pyright
-lua require'lspconfig'.pyright.setup{}
-
-" Gopls with lsp
-lua require'lspconfig'.gopls.setup{}
-
-" Rust stuff
-" setup rust_analyzer LSP (IDE features)
-lua require'lspconfig'.rust_analyzer.setup{}
-
 " Use LSP omni-completion in Rust files
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-nnoremap <leader><leader>c :call Clippy()<CR>
 
 """""""""""""""""""""""""
 " Custom functions
