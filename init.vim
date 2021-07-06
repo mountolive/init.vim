@@ -541,6 +541,10 @@ autocmd Filetype gitcommit,markdown,note setlocal complete+=kspell
 " ecr - like erb
 autocmd BufRead,BufNewFile *.ecr set filetype=.html.eruby
 
+" Rusts' ctags (check README for more info)
+autocmd BufRead *.rs :setlocal tags=./.rstags;/,$RUST_SRC_PATH/.rstags
+autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
+
 " Golang
 au FileType go nmap <leader>R <Plug>(go-run)
 au FileType go nmap <leader>B <Plug>(go-build)
