@@ -239,6 +239,9 @@ nnoremap <Leader><Leader>l :lopen<CR>tocmd! BufWritePost * Neomake
 " Clippy
 nnoremap <leader><leader>c :call Clippy()<CR>
 
+" Removing annoying mappings
+nnoremap - <NOP>
+
 " some built in keybindings for included plugins
 "
 " matchit - <%> jums to other end of selected brackets
