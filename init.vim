@@ -336,6 +336,20 @@ if has("persistent_undo")
   set undofile
 endif
 
+" Diagnostics
+" Set updatetime for CursorHold
+" 300ms of no cursor movement to trigger CursorHold
+set updatetime=300
+" Show diagnostic popup on cursor hold
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
+" Show declaration
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+
 " Search settings
 set ignorecase
 set smartcase
@@ -440,16 +454,19 @@ let g:notes_word_boundaries = 1
 
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
       \   'filename': 'LightlineFilename'
       \ },
       \ }
+
+" Not show INSERT mode when, well, in INSERT mode
+set noshowmode
 
 " Vim test
 let test#strategy = "neoterm"
