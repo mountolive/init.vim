@@ -338,10 +338,10 @@ endif
 
 " Diagnostics
 " Set updatetime for CursorHold
-" 300ms of no cursor movement to trigger CursorHold
-" set updatetime=300
+" 400ms of no cursor movement to trigger CursorHold
+set updatetime=400
 " Show diagnostic popup on cursor hold
-" autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+autocmd CursorHold *.rs lua vim.lsp.diagnostic.show_line_diagnostics()
 
 " Show declaration
 nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
@@ -397,8 +397,8 @@ let g:terminal_color_15 = '#eeeeec'
 " Pyright
 lua require'lspconfig'.pyright.setup{}
 
-" Gopls with lsp
-lua require'lspconfig'.gopls.setup{}
+" Gopls with lsp -> commented because default gopls is already pretty good
+" lua require'lspconfig'.gopls.setup{}
 
 " Rust stuff
 " setup rust_analyzer LSP (IDE features)
