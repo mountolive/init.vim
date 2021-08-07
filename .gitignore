@@ -1,3 +1,6 @@
 swap
 undo
 viminfo
+plugged
+autoload
+old.init
