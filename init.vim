@@ -151,10 +151,10 @@ nnoremap <Leader>tl :call neoterm#clear()<cr>
 
 " clear highlight
 map <Leader><Leader>h :set hlsearch!<CR>
-map <Leader><Leader>j :set hlsearch<CR>
 
 " format json
 map <Leader>Z :%!jq .<CR>
+
 
 " regenerate CTAGS - https://github.com/universal-ctags/ctags
 map <Leader>ct :silent !ctags -R --exclude="*min.js"<CR>
@@ -241,6 +241,7 @@ nnoremap <leader><leader>c :call Clippy()<CR>
 
 " Removing annoying mappings
 nnoremap - <NOP>
+xnoremap u <nop>
 
 " some built in keybindings for included plugins
 "
@@ -395,14 +396,36 @@ let g:terminal_color_15 = '#eeeeec'
 " LSP
 
 " Pyright
-lua require'lspconfig'.pyright.setup{}
+lua << EOF
+require'lspconfig'.pyright.setup{
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- Disable virtual_text
+        virtual_text = false
+      }
+    ),
+  }
+}
+EOF
 
 " Gopls with lsp -> commented because default gopls is already pretty good
 " lua require'lspconfig'.gopls.setup{}
 
 " Rust stuff
 " setup rust_analyzer LSP (IDE features)
-lua require'lspconfig'.rust_analyzer.setup{}
+lua << EOF
+require'lspconfig'.rust_analyzer.setup{
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- Disable virtual_text
+        virtual_text = false
+      }
+    ),
+  }
+}
+EOF
 
 " Ack.vimm
 cnoreabbrev ag Ack! -Q
@@ -581,7 +604,7 @@ let g:go_referrers_mode="gopls"
 let g:go_rename_command = 'gopls'
 let g:go_implements_mode = 'gopls'
 
-let g:go_build_tags='infra sql amqp'
+" let g:go_build_tags='infra sql amqp'
 
 let g:go_highlight_diagnostic_errors = 0
 let g:go_highlight_diagnostic_warnings = 0
