@@ -18,25 +18,25 @@ Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
-Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
-Plug 'tpope/vim-vinegar'
+" Plug 'vim-ruby/vim-ruby'
+" Plug 'tpope/vim-rake', { 'for': 'ruby' }
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-rails'
+" Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
+" Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+" Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
+" Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
+" Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-abolish'
+" Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-Plug 'tpope/vim-haml', { 'for': ['haml'] }
-Plug 'slim-template/vim-slim', { 'for': ['slim'] }
-Plug 'tomtom/tcomment_vim'
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
-Plug 'kana/vim-textobj-user', { 'for': ['ruby'] }
+" Plug 'tpope/vim-haml', { 'for': ['haml'] }
+" Plug 'slim-template/vim-slim', { 'for': ['slim'] }
+" Plug 'tomtom/tcomment_vim'
+" Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
+" Plug 'kana/vim-textobj-user', { 'for': ['ruby'] }
 Plug 'thinca/vim-localrc'
 Plug 'jgdavey/vim-blockle'
 Plug 'othree/eregex.vim'
@@ -50,13 +50,13 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml', 'eruby'] }
-Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'ap/vim-css-color'
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml', 'eruby'] }
+" Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+" Plug 'ap/vim-css-color'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'cespare/vim-toml'
@@ -66,8 +66,8 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 
 " Other languages
-Plug 'myint/clang-complete', { 'for': ['c', 'cpp'] }
-Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+" Plug 'myint/clang-complete', { 'for': ['c', 'cpp'] }
+" Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
@@ -87,11 +87,9 @@ Plug 'nvim-lua/completion-nvim'
 call plug#end()
 
 " set Python
-if os == 'Darwin' || os == 'Mac'
-  let g:python_host_prog  = '/Users/leonardoguercio/.asdf/shims/python'
-  let g:python3_host_prog  = '/Users/leonardoguercio/.asdf/shims/python3'
-endif
+let g:python3_host_prog  = '/usr/bin/python3'
 
+                              
 if $TERM =~ '256'
   set termguicolors " true colors
   set t_Co=256
