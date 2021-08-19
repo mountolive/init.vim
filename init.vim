@@ -1,6 +1,6 @@
 let os = substitute(system('uname'), "\n", "", "")
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.nvim/plugged')
 
 function! DoRemote(arg)
   UpdateRemotePlugins
