@@ -249,6 +249,9 @@ map P <Plug>(miniyank-startPut)
 map <leader>m <Plug>(miniyank-cycle)
 map <leader>M <Plug>(miniyank-cycleback)
 
+" Remove trailing space with F5
+nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
+
 " some built in keybindings for included plugins
 "
 " matchit - <%> jums to other end of selected brackets
