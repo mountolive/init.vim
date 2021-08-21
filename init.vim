@@ -242,6 +242,13 @@ nnoremap <leader><leader>c :call Clippy()<CR>
 nnoremap - <NOP>
 xnoremap u <nop>
 
+" miniyank
+map p <Plug>(miniyank-startput)
+map P <Plug>(miniyank-startPut)
+
+map <leader>m <Plug>(miniyank-cycle)
+map <leader>M <Plug>(miniyank-cycleback)
+
 " some built in keybindings for included plugins
 "
 " matchit - <%> jums to other end of selected brackets
@@ -265,6 +272,7 @@ scriptencoding utf-8
 set encoding=utf-8
 set termencoding=utf-8
 set clipboard=unnamed
+set clipboard+=unnamedplus
 filetype plugin indent on " Do filetype detection and load custom file plugins and indent files
 set laststatus=2          " When you go into insert mode,
                           " the status line color changes.
