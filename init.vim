@@ -34,7 +34,7 @@ Plug 'tpope/vim-endwise'
 Plug 'junegunn/gv.vim'
 " Plug 'tpope/vim-haml', { 'for': ['haml'] }
 " Plug 'slim-template/vim-slim', { 'for': ['slim'] }
-" Plug 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 " Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
 " Plug 'kana/vim-textobj-user', { 'for': ['ruby'] }
 Plug 'thinca/vim-localrc'
@@ -53,8 +53,8 @@ Plug 'mustache/vim-mustache-handlebars'
 " Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml', 'eruby'] }
 " Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'ap/vim-css-color'
 Plug 'editorconfig/editorconfig-vim'
@@ -87,7 +87,8 @@ Plug 'nvim-lua/completion-nvim'
 call plug#end()
 
 " set Python
-let g:python3_host_prog  = '/usr/bin/python3'
+let g:python3_host_prog  = expand('~/.asdf/shims/python')
+let g:python_host_prog  = expand('~/.asdf/shims/python2')
 
                               
 if $TERM =~ '256'
@@ -507,19 +508,19 @@ let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_serialize = 1
 let g:neomake_serialize_abort_on_error = 1
 
-function! MyOnBattery()
-  if filereadable('/usr/bin/pmset')
-    silent exe "!pmset -g batt | grep discharging"
-    return !v:shell_error
-  else
-    return readfile('/sys/class/power_supply/AC0/online') == ['0']
-  endif
-endfunction
-if MyOnBattery()
-  call neomake#configure#automake('w')
-else
-  call neomake#configure#automake('inrw', 1000)
-endif
+" function! MyOnBattery()
+"   if filereadable('/usr/bin/pmset')
+"     silent exe "!pmset -g batt | grep discharging"
+"     return !v:shell_error
+"   else
+"     return readfile('/sys/class/power_supply/AC0/online') == ['0']
+"   endif
+" endfunction
+" if MyOnBattery()
+"   call neomake#configure#automake('w')
+" else
+"   call neomake#configure#automake('inrw', 1000)
+" endif
 
 " Neoterm
 let g:neoterm_clear_cmd = "clear; printf '=%.0s' {1..80}; clear"
