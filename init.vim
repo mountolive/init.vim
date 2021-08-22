@@ -45,7 +45,6 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 
 " Other languages
-Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
 " After lsp with neovim 0.5.0
@@ -58,14 +57,19 @@ Plug 'nvim-lua/lsp_extensions.nvim'
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
+" Highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
+
+" Import custom config for lsp
+lua require("lsp_config")
 
 " set Python
 let g:python3_host_prog  = expand('~/.asdf/shims/python')
 let g:python_host_prog  = expand('~/.asdf/shims/python2')
 
-                              
+
 if $TERM =~ '256'
   set termguicolors " true colors
   set t_Co=256
@@ -217,6 +221,9 @@ map <leader>M <Plug>(miniyank-cycleback)
 " Remove trailing space with F5
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
 
+" Open diagnostics loclist
+nnoremap <space>l :call ToggleDiagnostics()<CR>
+
 " some built in keybindings for included plugins
 "
 " matchit - <%> jums to other end of selected brackets
@@ -317,14 +324,7 @@ endif
 " 400ms of no cursor movement to trigger CursorHold
 set updatetime=400
 " Show diagnostic popup on cursor hold
-autocmd CursorHold *.rs lua vim.lsp.diagnostic.show_line_diagnostics()
-
-" Show declaration
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+autocmd CursorHold *.* lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
 
 " Search settings
 set ignorecase
@@ -368,41 +368,8 @@ let g:terminal_color_15 = '#eeeeec'
 " Plugin's
 """""""""""""""""""""""""
 
-" LSP
-
-" Pyright
-lua << EOF
-require'lspconfig'.pyright.setup{
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        -- Disable virtual_text
-        virtual_text = false
-      }
-    ),
-  }
-}
-EOF
-
-" Gopls with lsp -> commented because default gopls is already pretty good
-" lua require'lspconfig'.gopls.setup{}
-
-" Rust stuff
-" setup rust_analyzer LSP (IDE features)
-lua << EOF
-require'lspconfig'.rust_analyzer.setup{
-  handlers = {
-    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-        -- Disable virtual_text
-        virtual_text = false
-      }
-    ),
-  }
-}
-EOF
-
-" Ack.vimm
+" Ack.vim
+" Note: by using it like Ack! it avoids auto jump to first file
 cnoreabbrev ag Ack! -Q
 cnoreabbrev aG Ack! -Q
 cnoreabbrev Ag Ack! -Q
@@ -441,7 +408,7 @@ let g:UltiSnipsExpandTrigger="<C-j>"
 let g:UltiSnipsSnippetsDir="~/.config/nvim/UltiSnips"
 
 " Notes
-let g:notes_directories = ['~/Dropbox/Notes']
+let g:notes_directories = ['~/notes']
 let g:notes_tab_indents = 0
 let g:notes_word_boundaries = 1
 
@@ -524,73 +491,64 @@ autocmd BufRead *.rs :setlocal tags=./.rstags;/,$RUST_SRC_PATH/.rstags
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
 " Go
-" au FileType go nmap <leader>R <Plug>(go-run)
-" au FileType go nmap <leader>B <Plug>(go-build)
-" au FileType go nmap <leader>T <Plug>(go-test)
-" au FileType go nmap <leader>C <Plug>(go-coverage)
-
-" vim-go
-" let g:go_bin_path = expand("~/go/bin")
-" 
-" " gopls and autocompletion
-" let g:go_def_mode = "gopls"
-" let g:go_fmt_command="gopls"
-" let g:go_gopls_gofumpt=1
-" let g:go_referrers_mode="gopls"
-" "let g:go_guru_scope = ["github.com/PaackEng/..."]
-" let g:go_rename_command = 'gopls'
-" let g:go_implements_mode = 'gopls'
-" 
-" " let g:go_build_tags='infra sql amqp'
-" 
-" let g:go_highlight_diagnostic_errors = 0
-" let g:go_highlight_diagnostic_warnings = 0
-" 
-" set statusline+=%#goStatuslineColor#
-" set statusline+=%{go#statusline#Show()}
-" set statusline+=%*
-" 
-" let g:go_list_type = "quickfix"
-" let g:go_term_width = 50
-" let g:go_term_close_on_exit = 1
-" 
-" "let g:go_fmt_experimental = 1
-" let g:go_fmt_command = "gofumports"
-" "let g:go_fmt_fail_silently = 1
-" let g:go_fmt_autosave = 1
-" 
-" let g:go_highlight_variable_declarations = 1
-" let g:go_highlight_build_constraints = 1
-" let g:go_highlight_functions = 1
-" let g:go_highlight_function_calls = 1
-" let g:go_highlight_methods = 1
-" let g:go_highlight_operators = 1
-" let g:go_highlight_types = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_extra_types = 1
-" let g:go_highlight_generate_tags = 1
-" let g:go_term_enabled = 1
-" 
-" au FileType go nmap <c-]> <Plug>(go-def)
-" autocmd FileType go map <c-e> :GoIfErr<CR>
-" autocmd FileType go nmap <c-a> :GoAlternate!<CR>
-" " c-@ === c-space :-O
-" au FileType go nmap <c-@> :GoInfo<CR>
-" au FileType go nmap <c-i> :GoCoverageToggle<CR>
-" autocmd FileType go map <c-b> <esc>:w<CR>:GoTestCompile<CR>
-" autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
-" 
-" autocmd FileType go set noexpandtab
-" autocmd FileType go set nolist
-" Use LSP omni-completion in Rust files
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.go lua goimports(1000)
+autocmd FileType go set noexpandtab
+autocmd FileType go set nolist
+" to update or close qickfix|loclist on save
+autocmd BufWritePost *.go call UpdateLoclist()
+" use gofumpt for formatting
+" autocmd BufWritePre *.go call GoFumpt()
 
 " Rust
 
+" Use LSP omni-completion in Rust files
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 """""""""""""""""""""""""
 " Custom functions
 """""""""""""""""""""""""
+
+" Formatter for go
+function GoFumpt()
+  let extension = expand('%:e')
+  if extension != 'go'
+    return
+  endif
+  let curr_file = expand('%:p')
+  silent exe '!gofumpt -w' curr_file
+endfunction
+
+" Toggles diagnostics in loclist
+function! ToggleDiagnostics()
+    let wins = filter(getwininfo(), 'v:val.quickfix || v:val.loclist')
+    " If closed, do it
+    if wins == []
+      lua vim.lsp.diagnostic.set_loclist()
+      return
+    endif
+    lclose
+endfunction
+
+" Updates loclist
+function! UpdateLoclist()
+    " Check loclist or quickfix
+    let wins = filter(getwininfo(), 'v:val.quickfix || v:val.loclist')
+    " If non open, don't do anything
+    if wins == []
+      return
+    endif
+    " restart the loclist (add quickfix if needed later on)
+    lua vim.lsp.diagnostic.set_loclist()
+    " if after restart it's empty, quit the loclist (lclose)
+    if len(getloclist(0)) == 0
+      lclose
+      return
+    endif
+    " go back to loclist after save
+    let winnr = wins[0]['winnr']
+    exe winnr."wincmd w"
+endfunction
 
 " Exec clippy for rust project
 function! Clippy()

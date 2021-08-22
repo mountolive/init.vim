@@ -51,3 +51,14 @@ ctags_options = ""
 ```
 
 _NOTE:_ remember to add `*/.*tags` to your `.gitignore`
+
+### TreeSitter [this](https://github.com/nvim-treesitter/nvim-treesitter)
+
+I've set this one mainly to provide nice highlighting
+
+Once installed, remember to add support for the languages you need.
+
+for example:
+```
+:TSInstall go
+```
