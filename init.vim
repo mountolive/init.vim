@@ -18,25 +18,9 @@ Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
-" Plug 'vim-ruby/vim-ruby'
-" Plug 'tpope/vim-rake', { 'for': 'ruby' }
-" Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-rails'
-" Plug 'tpope/vim-rbenv', { 'for': 'ruby' }
-" Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-" Plug 'Keithbsmiley/rspec.vim', { 'for': 'ruby' }
-" Plug 'thoughtbot/vim-rspec', { 'for': 'ruby' }
-" Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-endwise'
-" Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-abolish'
-" Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-" Plug 'tpope/vim-haml', { 'for': ['haml'] }
-" Plug 'slim-template/vim-slim', { 'for': ['slim'] }
 Plug 'tomtom/tcomment_vim'
-" Plug 'nelstrom/vim-textobj-rubyblock', { 'for': ['ruby'] }
-" Plug 'kana/vim-textobj-user', { 'for': ['ruby'] }
 Plug 'thinca/vim-localrc'
 Plug 'jgdavey/vim-blockle'
 Plug 'othree/eregex.vim'
@@ -50,13 +34,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars'
-" Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml', 'eruby'] }
-" Plug 'mxw/vim-jsx', { 'for': 'javascript.jsx' }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-" Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
-" Plug 'ap/vim-css-color'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'cespare/vim-toml'
@@ -66,13 +45,8 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 
 " Other languages
-" Plug 'myint/clang-complete', { 'for': ['c', 'cpp'] }
-" Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-" Plug 'zchee/deoplete-go', { 'for': 'go', 'do': 'make'}
-" Plug 'vim-scripts/groovy.vim', { 'for': 'groovy' }
-" Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
 " After lsp with neovim 0.5.0
 " Collection of common configurations for the Nvim LSP client
@@ -107,7 +81,6 @@ inoremap jj <ESC>
 map <C-n> :NERDTreeToggle<CR>
 map <Leader>r "hy:%S/<C-r>h//gc<left><left><left>
 map <Leader>f *
-" map <Leader>rr :!ruby %<CR>
 map <Leader>w :w<CR>
 map <Leader>qa :wqa<CR>
 map <Leader>[ :bprevious<CR>
@@ -125,8 +98,6 @@ map <F5> :so $MYVIMRC<CR>
 nnoremap <leader>. :Tags <CR>
 nnoremap <Leader>fu :BTags<Cr>
 nnoremap <C-e> :Buffers<CR>
-" fix method jumping
-" nnoremap <buffer><silent> <C-]> :tag <C-R><C-W><CR>
 nnoremap <buffer><silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
 
 " run set tests
@@ -204,9 +175,6 @@ map <Leader>l <Plug>(easymotion-lineforward)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 map <Leader>h <Plug>(easymotion-linebackward)
-
-" Rubocop fix current file
-nmap <leader>rc :call RubocopAutoFix()<CR>
 
 " Easy align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -450,11 +418,6 @@ let g:deoplete#enable_at_startup = 1
 call deoplete#custom#source('_', 'max_candidates', 3)
 call deoplete#custom#source('buffer', 'rank', 501)
 call deoplete#custom#source('buffer', 'max_candidates', 2)
-" call deoplete#custom#source('tabnine', 'rank', 50)
-
-" deoplete-go settings
-" let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-" let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 
 " use tab
 imap <silent><expr> <TAB>
@@ -504,31 +467,9 @@ let test#strategy = "neoterm"
 " Neomake
 " let g:neomake_verbose = 3
 let g:neomake_logfile = '/tmp/neomake.log'
-" let g:neomake_ruby_reek_maker = {
-"     \ 'args': '--single-line',
-"     \ 'errorformat':
-"     \   '%E%.%#: Racc::ParseError: %f:%l :: %m,' .
-"     \   '%W%f:%l: %m'
-"     \ }
-" let b:neomake_ruby_flog_args = ['-t 10']
-" let g:neomake_ruby_enabled_makers = ['mri', 'rubocop', 'reek']
 " let g:neomake_javascript_enabled_makers = ['eslint']
 " let g:neomake_serialize = 1
 " let g:neomake_serialize_abort_on_error = 1
-
-" function! MyOnBattery()
-"   if filereadable('/usr/bin/pmset')
-"     silent exe "!pmset -g batt | grep discharging"
-"     return !v:shell_error
-"   else
-"     return readfile('/sys/class/power_supply/AC0/online') == ['0']
-"   endif
-" endfunction
-" if MyOnBattery()
-"   call neomake#configure#automake('w')
-" else
-"   call neomake#configure#automake('inrw', 1000)
-" endif
 
 " Neoterm
 let g:neoterm_clear_cmd = "clear; printf '=%.0s' {1..80}; clear"
@@ -562,12 +503,6 @@ let g:EasyMotion_smartcase = 1
 " Smartsign (type `3` and match `3`&`#`)
 let g:EasyMotion_use_smartsign_us = 1
 
-" ruby
-" autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=?
-" autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=!
-" autocmd FileType ruby compiler ruby
-
-
 " omnifuncs
 set omnifunc=syntaxcomplete#Complete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -580,26 +515,19 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 
-" Handlebars/Mustache
-" autocmd BufRead,BufNewFile *.hb.erb set filetype=mustache
-
 " Turn on spellcheck
 autocmd Filetype gitcommit,markdown,note setlocal spell textwidth=72
 autocmd Filetype gitcommit,markdown,note setlocal complete+=kspell
-
-" Crystal
-" ecr - like erb
-" autocmd BufRead,BufNewFile *.ecr set filetype=.html.eruby
 
 " Rusts' ctags (check README for more info)
 autocmd BufRead *.rs :setlocal tags=./.rstags;/,$RUST_SRC_PATH/.rstags
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
 " Go
-au FileType go nmap <leader>R <Plug>(go-run)
-au FileType go nmap <leader>B <Plug>(go-build)
-au FileType go nmap <leader>T <Plug>(go-test)
-au FileType go nmap <leader>C <Plug>(go-coverage)
+" au FileType go nmap <leader>R <Plug>(go-run)
+" au FileType go nmap <leader>B <Plug>(go-build)
+" au FileType go nmap <leader>T <Plug>(go-test)
+" au FileType go nmap <leader>C <Plug>(go-coverage)
 
 " vim-go
 " let g:go_bin_path = expand("~/go/bin")
@@ -690,15 +618,6 @@ function! Clippy()
     echo 'not a rust file'
   endif
 endfunction
-
-"Toggle arrow keys
-
-function! RubocopAutoFix()
-  exe "w"
-  silent exe "!rubocop -a -R % &> /dev/null"
-  silent exe "e %"
-  silent exe "Neomake"
-endfun
 
 "This allows for change paste motion cp{motion}
 nmap <silent> cp :set opfunc=ChangePaste<CR>g@
