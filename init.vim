@@ -84,6 +84,7 @@ Plug 'nvim-lua/lsp_extensions.nvim'
 " Autocompletion framework for built-in LSP
 Plug 'nvim-lua/completion-nvim'
 
+
 call plug#end()
 
 " set Python
@@ -106,7 +107,7 @@ inoremap jj <ESC>
 map <C-n> :NERDTreeToggle<CR>
 map <Leader>r "hy:%S/<C-r>h//gc<left><left><left>
 map <Leader>f *
-map <Leader>rr :!ruby %<CR>
+" map <Leader>rr :!ruby %<CR>
 map <Leader>w :w<CR>
 map <Leader>qa :wqa<CR>
 map <Leader>[ :bprevious<CR>
@@ -160,7 +161,7 @@ map <Leader>ct :silent !ctags -R --exclude="*min.js"<CR>
 
 " Devdocs docs
 command! -nargs=? DevDocs :call system('type -p open >/dev/null 2>&1 && open http://devdocs.io/#q=<args> || xdg-open http://devdocs.io/#q=<args>')
-au FileType python,ruby,rspec,javascript,html,php,eruby,coffee,haml nmap <buffer> K :exec "DevDocs " . fnameescape(expand('<cword>'))<CR>
+" au FileType python,ruby,rspec,javascript,html,php,eruby,coffee,haml nmap <buffer> K :exec "DevDocs " . fnameescape(expand('<cword>'))<CR>
 
 " Grammarous
 let g:grammarous#default_comments_only_filetypes = {
@@ -172,10 +173,6 @@ let g:grammarous#default_comments_only_filetypes = {
 map <Leader>e :e <C-R>=escape(expand("%:p:h"),' ') . '/'<CR>
 map <Leader>s :split <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
 map <Leader>v :vnew <C-R>=escape(expand("%:p:h"), ' ') . '/'<CR>
-
-" ADDED FROM OLD VIMRC
-" Go related
-let g:go_fmt_command = "goimports"
 
 " Rust related
 let g:rustfmt_autosave = 1
@@ -507,17 +504,17 @@ let test#strategy = "neoterm"
 " Neomake
 " let g:neomake_verbose = 3
 let g:neomake_logfile = '/tmp/neomake.log'
-let g:neomake_ruby_reek_maker = {
-    \ 'args': '--single-line',
-    \ 'errorformat':
-    \   '%E%.%#: Racc::ParseError: %f:%l :: %m,' .
-    \   '%W%f:%l: %m'
-    \ }
+" let g:neomake_ruby_reek_maker = {
+"     \ 'args': '--single-line',
+"     \ 'errorformat':
+"     \   '%E%.%#: Racc::ParseError: %f:%l :: %m,' .
+"     \   '%W%f:%l: %m'
+"     \ }
 " let b:neomake_ruby_flog_args = ['-t 10']
-let g:neomake_ruby_enabled_makers = ['mri', 'rubocop', 'reek']
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_serialize = 1
-let g:neomake_serialize_abort_on_error = 1
+" let g:neomake_ruby_enabled_makers = ['mri', 'rubocop', 'reek']
+" let g:neomake_javascript_enabled_makers = ['eslint']
+" let g:neomake_serialize = 1
+" let g:neomake_serialize_abort_on_error = 1
 
 " function! MyOnBattery()
 "   if filereadable('/usr/bin/pmset')
@@ -566,9 +563,9 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 
 " ruby
-autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=?
-autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=!
-autocmd FileType ruby compiler ruby
+" autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=?
+" autocmd FileType ruby,eruby,yaml,haml setlocal iskeyword+=!
+" autocmd FileType ruby compiler ruby
 
 
 " omnifuncs
@@ -584,7 +581,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 
 " Handlebars/Mustache
-autocmd BufRead,BufNewFile *.hb.erb set filetype=mustache
+" autocmd BufRead,BufNewFile *.hb.erb set filetype=mustache
 
 " Turn on spellcheck
 autocmd Filetype gitcommit,markdown,note setlocal spell textwidth=72
@@ -592,70 +589,75 @@ autocmd Filetype gitcommit,markdown,note setlocal complete+=kspell
 
 " Crystal
 " ecr - like erb
-autocmd BufRead,BufNewFile *.ecr set filetype=.html.eruby
+" autocmd BufRead,BufNewFile *.ecr set filetype=.html.eruby
 
 " Rusts' ctags (check README for more info)
 autocmd BufRead *.rs :setlocal tags=./.rstags;/,$RUST_SRC_PATH/.rstags
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
-" Golang
+" Go
 au FileType go nmap <leader>R <Plug>(go-run)
 au FileType go nmap <leader>B <Plug>(go-build)
 au FileType go nmap <leader>T <Plug>(go-test)
 au FileType go nmap <leader>C <Plug>(go-coverage)
+
 " vim-go
-
-" gopls and autocompletion
-let g:go_def_mode = "gopls"
-let g:go_fmt_command="gopls"
-let g:go_gopls_gofumpt=1
-let g:go_referrers_mode="gopls"
-"let g:go_guru_scope = ["github.com/PaackEng/..."]
-let g:go_rename_command = 'gopls'
-let g:go_implements_mode = 'gopls'
-
-" let g:go_build_tags='infra sql amqp'
-
-let g:go_highlight_diagnostic_errors = 0
-let g:go_highlight_diagnostic_warnings = 0
-
-set statusline+=%#goStatuslineColor#
-set statusline+=%{go#statusline#Show()}
-set statusline+=%*
-
-let g:go_list_type = "quickfix"
-let g:go_term_width = 50
-let g:go_term_close_on_exit = 1
-
-"let g:go_fmt_experimental = 1
-let g:go_fmt_command = "gofumports"
-"let g:go_fmt_fail_silently = 1
-let g:go_fmt_autosave = 1
-
-let g:go_highlight_variable_declarations = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_generate_tags = 1
-let g:go_term_enabled = 1
-
-au FileType go nmap <c-]> <Plug>(go-def)
-autocmd FileType go map <c-e> :GoIfErr<CR>
-autocmd FileType go nmap <c-a> :GoAlternate!<CR>
-" c-@ === c-space :-O
-au FileType go nmap <c-@> :GoInfo<CR>
-au FileType go nmap <c-i> :GoCoverageToggle<CR>
-autocmd FileType go map <c-b> <esc>:w<CR>:GoTestCompile<CR>
-autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
-
-autocmd FileType go set noexpandtab
-autocmd FileType go set nolist
+" let g:go_bin_path = expand("~/go/bin")
+" 
+" " gopls and autocompletion
+" let g:go_def_mode = "gopls"
+" let g:go_fmt_command="gopls"
+" let g:go_gopls_gofumpt=1
+" let g:go_referrers_mode="gopls"
+" "let g:go_guru_scope = ["github.com/PaackEng/..."]
+" let g:go_rename_command = 'gopls'
+" let g:go_implements_mode = 'gopls'
+" 
+" " let g:go_build_tags='infra sql amqp'
+" 
+" let g:go_highlight_diagnostic_errors = 0
+" let g:go_highlight_diagnostic_warnings = 0
+" 
+" set statusline+=%#goStatuslineColor#
+" set statusline+=%{go#statusline#Show()}
+" set statusline+=%*
+" 
+" let g:go_list_type = "quickfix"
+" let g:go_term_width = 50
+" let g:go_term_close_on_exit = 1
+" 
+" "let g:go_fmt_experimental = 1
+" let g:go_fmt_command = "gofumports"
+" "let g:go_fmt_fail_silently = 1
+" let g:go_fmt_autosave = 1
+" 
+" let g:go_highlight_variable_declarations = 1
+" let g:go_highlight_build_constraints = 1
+" let g:go_highlight_functions = 1
+" let g:go_highlight_function_calls = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_operators = 1
+" let g:go_highlight_types = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_extra_types = 1
+" let g:go_highlight_generate_tags = 1
+" let g:go_term_enabled = 1
+" 
+" au FileType go nmap <c-]> <Plug>(go-def)
+" autocmd FileType go map <c-e> :GoIfErr<CR>
+" autocmd FileType go nmap <c-a> :GoAlternate!<CR>
+" " c-@ === c-space :-O
+" au FileType go nmap <c-@> :GoInfo<CR>
+" au FileType go nmap <c-i> :GoCoverageToggle<CR>
+" autocmd FileType go map <c-b> <esc>:w<CR>:GoTestCompile<CR>
+" autocmd FileType go map <c-s> <esc>:w<CR>:GoTestCompile<CR>
+" 
+" autocmd FileType go set noexpandtab
+" autocmd FileType go set nolist
 " Use LSP omni-completion in Rust files
+
+" Rust
+
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
 """""""""""""""""""""""""
