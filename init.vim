@@ -224,6 +224,13 @@ nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :noh
 " Open diagnostics loclist
 nnoremap <space>l :call ToggleDiagnostics()<CR>
 
+" Open implementation in quickfix
+nnoremap <space>i :call ToggleImplementations()<CR>
+
+" Open references in quickfix
+nnoremap <space>r :call ToggleReferences()<CR>
+
+
 " some built in keybindings for included plugins
 "
 " matchit - <%> jums to other end of selected brackets
@@ -445,9 +452,7 @@ let g:neoterm_raise_when_tests_fail = 1
 let g:neoterm_default_mod = 'botright'
 let g:neoterm_size = 10
 let g:neoterm_autoscroll = 1
-
-let g:neoterm_rspec_lib_cmd = 'bundle exec rspec'
-
+"
 " JS libs
 let g:used_javascript_libs = 'jquery,handlebars,underscore,backbone'
 
@@ -497,26 +502,44 @@ autocmd FileType go set noexpandtab
 autocmd FileType go set nolist
 " to update or close qickfix|loclist on save
 autocmd BufWritePost *.go call UpdateLoclist()
-" use gofumpt for formatting
-" autocmd BufWritePre *.go call GoFumpt()
 
 " Rust
 
 " Use LSP omni-completion in Rust files
 autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
+" Autoclose quickfix or loclist on closing editor
+autocmd BufWinEnter quickfix nnoremap <silent> <buffer>
+            \   q :cclose<cr>:lclose<cr>
+autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
+            \   bd|
+            \   q | endif
+
 """""""""""""""""""""""""
 " Custom functions
 """""""""""""""""""""""""
 
-" Formatter for go
-function GoFumpt()
-  let extension = expand('%:e')
-  if extension != 'go'
-    return
-  endif
-  let curr_file = expand('%:p')
-  silent exe '!gofumpt -w' curr_file
+" Toggle references
+function! ToggleReferences()
+    let wins = filter(getwininfo(), 'v:val.quickfix')
+    " If closed, do it
+    if wins == []
+      lua vim.lsp.buf.references()
+      return
+    endif
+    cclose
+endfunction
+
+
+" Toggle implementations
+function! ToggleImplementations()
+    let wins = filter(getwininfo(), 'v:val.quickfix')
+    " If closed, do it
+    if wins == []
+      lua vim.lsp.buf.implementation()
+      return
+    endif
+    cclose
 endfunction
 
 " Toggles diagnostics in loclist
