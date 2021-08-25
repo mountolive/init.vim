@@ -515,9 +515,22 @@ autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
             \   bd|
             \   q | endif
 
+nnoremap <space>o :call TODO()<CR>
+
 """""""""""""""""""""""""
-" Custom functions
+" Functions
 """""""""""""""""""""""""
+
+" Retrieve all TODOs
+function! TODO()
+    let wins = filter(getwininfo(), 'v:val.quickfix')
+    " If closed, do it
+    if wins == []
+      execute ":Ack! -Q 'TODO' ."
+      return
+    endif
+    cclose
+endfunction
 
 " Toggle references
 function! ToggleReferences()
