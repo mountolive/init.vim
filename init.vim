@@ -43,6 +43,7 @@ Plug 'bfredl/nvim-miniyank'
 Plug 'int3/vim-extradite'
 Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
+Plug 'vim-scripts/dbext.vim'
 
 " Other languages
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -229,6 +230,9 @@ nnoremap <space>i :call ToggleImplementations()<CR>
 
 " Open references in quickfix
 nnoremap <space>r :call ToggleReferences()<CR>
+
+" Show TODOs
+nnoremap <space>o :call TODO()<CR>
 
 
 " some built in keybindings for included plugins
@@ -515,7 +519,6 @@ autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix' ) |
             \   bd|
             \   q | endif
 
-nnoremap <space>o :call TODO()<CR>
 
 """""""""""""""""""""""""
 " Functions
