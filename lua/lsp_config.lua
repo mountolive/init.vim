@@ -86,6 +86,7 @@ nvim_lsp.gopls.setup{
         shadow = true,
         fieldalignment = true,
         unusedwrite = true,
+        fillstruct = false,
       },
       staticcheck = true,
       gofumpt = true,
