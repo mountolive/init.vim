@@ -116,6 +116,19 @@ nvim_lsp.rust_analyzer.setup{
   on_attach = on_attach,
 }
 
+-- Deno
+nvim_lsp.denols.setup{
+  handlers = {
+    ["textDocument/publishDiagnostics"] = vim.lsp.with(
+      vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- Disable virtual_text
+        virtual_text = false
+      }
+    ),
+  },
+  on_attach = on_attach,
+}
+
 -- Treesitter (Highlighting)
 require'nvim-treesitter.configs'.setup{
   ensure_installed = "all",
