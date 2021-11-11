@@ -1,6 +1,10 @@
 # NEOVIM config
 
-I've use this config smoothly for Go, Ruby and Python
+I've use this config smoothly for Go, Ruby, Rust, Bash and Python
+
+## Bash
+
+`npm i -g bash-language-server`
 
 ## Python
 
