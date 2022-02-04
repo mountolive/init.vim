@@ -45,6 +45,11 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'vim-scripts/dbext.vim'
 
+" Debugger
+Plug 'mfussenegger/nvim-dap'
+Plug 'leoluz/nvim-dap-go'
+Plug 'rcarriga/nvim-dap-ui'
+
 " Other languages
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 
@@ -65,6 +70,9 @@ call plug#end()
 
 " Import custom config for lsp
 lua require("lsp_config")
+
+" Setup debugger
+lua require("dap-go").setup()
 
 " set Python
 let g:python3_host_prog  = expand('~/.asdf/shims/python')
@@ -234,15 +242,19 @@ nnoremap <space>r :call ToggleReferences()<CR>
 " Show TODOs
 nnoremap <space>o :call TODO()<CR>
 
+" Debugger maps
+nnoremap <silent> <leader><leader>D :lua require("dapui").open()<CR>
+nnoremap <silent> <leader><leader>C :lua require("dapui").close()<CR>
+nnoremap <silent> <leader><leader>T :lua require("dapui").toggle()<CR>
+nnoremap <silent> <F6> :lua require'dap'.continue()<CR>
+nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>
+nnoremap <silent> <F9> :lua require'dap'.step_into()<CR>
+nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader><leader>b :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader><leader>r :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader><leader>l :lua require'dap'.run_last()<CR>
+nnoremap <silent> <F2> :lua require('dap-go').debug_test()<CR>
 
-" some built in keybindings for included plugins
-"
-" matchit - <%> jums to other end of selected brackets
-" surround - <cs'"> - change ' to " around current selection
-" surround - <ds"> - remove " around current selection
-" surround - <yss[> - surounds current selection with [
-" textobj-rubyblock - var - selects outer ruby block
-"                     vir - selects inner ruby block
 """""""""""""""""""""""""
 " Basic features
 """""""""""""""""""""""""
