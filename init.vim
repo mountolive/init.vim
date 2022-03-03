@@ -99,6 +99,7 @@ map <Leader>qa :wqa<CR>
 map <Leader>[ :bprevious<CR>
 map <Leader>] :bnext<CR>
 " Custom yank/p to non-default buffer
+" Not working with gnome's xclipboard
 map <Leader>y "ky
 map <Leader>p "kp
 map <Leader>D "_dd<CR>
@@ -138,7 +139,6 @@ map <Leader><Leader>h :set hlsearch!<CR>
 
 " format json
 map <Leader>Z :%!jq .<CR>
-
 
 " regenerate CTAGS - https://github.com/universal-ctags/ctags
 map <Leader>ct :silent !ctags -R --exclude="*min.js"<CR>
@@ -224,8 +224,8 @@ xnoremap u <nop>
 map p <Plug>(miniyank-startput)
 map P <Plug>(miniyank-startPut)
 
-map <leader>m <Plug>(miniyank-cycle)
-map <leader>b <Plug>(miniyank-cycleback)
+map <leader><leader>n <Plug>(miniyank-cycle)
+map <leader><leader>N <Plug>(miniyank-cycleback)
 
 " Remove trailing space with F5
 nnoremap <silent> <F5> :let _s=@/ <Bar> :%s/\s\+$//e <Bar> :let @/=_s <Bar> :nohl <Bar> :unlet _s <CR>
@@ -254,6 +254,8 @@ nnoremap <silent> <leader><leader>b :lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <silent> <leader><leader>r :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader><leader>l :lua require'dap'.run_last()<CR>
 nnoremap <silent> <F2> :lua require('dap-go').debug_test()<CR>
+
+
 
 """""""""""""""""""""""""
 " Basic features
