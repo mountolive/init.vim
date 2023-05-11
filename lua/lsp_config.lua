@@ -83,7 +83,7 @@ nvim_lsp.gopls.setup{
       experimentalPostfixCompletions = true,
       analyses = {
         unusedparams = true,
-        shadow = true,
+        -- shadow = true,
         fieldalignment = true,
         unusedwrite = true,
         fillstruct = false,

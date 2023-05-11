@@ -731,6 +731,7 @@ call NERDTreeHighlightFile('rb', 'Red', 'none', 'red')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500')
 call NERDTreeHighlightFile('ts', 'Magenta', 'none', '#ff00ff')
 call NERDTreeHighlightFile('go', 'green', 'none', 'green')
+call NERDTreeHighlightFile('py', 'cyan', 'none', 'red')
 call NERDTreeHighlightFile('rs', 'Magenta', 'none', '#ff00ff')
 
 if $VIM_CRONTAB == "true"

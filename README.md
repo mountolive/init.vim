@@ -2,6 +2,12 @@
 
 I've use this config smoothly for Go, Ruby, Rust, Bash and Python
 
+## Go
+
+```bash
+go install golang.org/x/tools/gopls@latest
+```
+
 ## Bash
 
 `npm i -g bash-language-server`
