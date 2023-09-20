@@ -349,7 +349,7 @@ endif
 " 400ms of no cursor movement to trigger CursorHold
 set updatetime=400
 " Show diagnostic popup on cursor hold
-autocmd CursorHold *.* lua vim.lsp.diagnostic.show_line_diagnostics({ focusable = false })
+autocmd CursorHold *.* lua vim.diagnostic.open_float({ cursor = "line" })
 
 " Search settings
 set ignorecase
@@ -514,7 +514,7 @@ autocmd BufRead *.rs :setlocal tags=./.rstags;/,$RUST_SRC_PATH/.rstags
 autocmd BufWritePost *.rs :silent! exec "!rusty-tags vi --quiet --start-dir=" . expand('%:p:h') . "&" | redraw!
 
 " Go
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.go lua vim.lsp.buf.format({ async = false })
 autocmd BufWritePre *.go lua goimports(1000)
 autocmd FileType go set noexpandtab
 autocmd FileType go set nolist
@@ -577,7 +577,7 @@ function! ToggleDiagnostics()
     let wins = filter(getwininfo(), 'v:val.quickfix || v:val.loclist')
     " If closed, do it
     if wins == []
-      lua vim.lsp.diagnostic.set_loclist()
+      lua vim.diagnostic.setloclist()
       return
     endif
     lclose
@@ -592,7 +592,7 @@ function! UpdateLoclist()
       return
     endif
     " restart the loclist (add quickfix if needed later on)
-    lua vim.lsp.diagnostic.set_loclist()
+    lua vim.diagnostic.setloclist()
     " if after restart it's empty, quit the loclist (lclose)
     if len(getloclist(0)) == 0
       lclose
