@@ -142,6 +142,19 @@ nvim_lsp.bashls.setup{
   on_attach = on_attach,
 }
 
+-- Kotlin
+nvim_lsp.kotlin_language_server.setup{
+  setup = {
+    kotlin = {
+      compiler = {
+        jvm = {
+          target = "21"
+        }
+      }
+    }
+  }
+}
+
 -- Treesitter (Highlighting)
 require'nvim-treesitter.configs'.setup{
   ensure_installed = "all",

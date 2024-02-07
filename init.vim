@@ -52,6 +52,8 @@ Plug 'rcarriga/nvim-dap-ui'
 
 " Other languages
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'udalov/kotlin-vim'
+Plug 'github/copilot.vim'
 
 " After lsp with neovim 0.5.0
 " Collection of common configurations for the Nvim LSP client
@@ -733,6 +735,7 @@ call NERDTreeHighlightFile('ts', 'Magenta', 'none', '#ff00ff')
 call NERDTreeHighlightFile('go', 'green', 'none', 'green')
 call NERDTreeHighlightFile('py', 'cyan', 'none', 'red')
 call NERDTreeHighlightFile('rs', 'Magenta', 'none', '#ff00ff')
+call NERDTreeHighlightFile('kt', 'cyan', 'none', 'cyan')
 
 if $VIM_CRONTAB == "true"
     set nobackup
