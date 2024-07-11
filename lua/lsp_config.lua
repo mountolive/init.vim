@@ -220,4 +220,4 @@ function goimports(timeout_ms)
     else
       vim.lsp.buf.execute_command(action)
     end
-  end
+end

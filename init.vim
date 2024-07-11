@@ -44,6 +44,7 @@ Plug 'int3/vim-extradite'
 Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'vim-scripts/dbext.vim'
+Plug 'nvim-neotest/nvim-nio'
 
 " Debugger
 Plug 'mfussenegger/nvim-dap'
@@ -73,6 +74,80 @@ lua require("lsp_config")
 
 " Setup debugger
 lua require("dap-go").setup()
+
+lua << EOF
+require("dapui").setup({
+  controls = {
+    element = "repl",
+    enabled = true,
+    icons = {
+      disconnect = "disc",
+      pause = "pause",
+      play = "play",
+      run_last = "run last",
+      step_back = "back",
+      step_into = "into",
+      step_out = "out",
+      step_over = "over",
+      terminate = "terminate"
+    }
+  },
+  element_mappings = {},
+  expand_lines = true,
+  floating = {
+    border = "single",
+    mappings = {
+      close = { "q", "<Esc>" }
+    }
+  },
+  force_buffers = true,
+  icons = {
+    collapsed = "collapse",
+    current_frame = "current_frame",
+    expanded = "expanded"
+  },
+  layouts = { {
+      elements = { {
+          id = "scopes",
+          size = 0.25
+        }, {
+          id = "breakpoints",
+          size = 0.25
+        }, {
+          id = "stacks",
+          size = 0.25
+        }, {
+          id = "watches",
+          size = 0.25
+        } },
+      position = "right",
+      size = 40
+    }, {
+      elements = { {
+          id = "repl",
+          size = 0.5
+        }, {
+          id = "console",
+          size = 0.5
+        } },
+      position = "bottom",
+      size = 10
+    } },
+  mappings = {
+    edit = "e",
+    expand = { "<CR>", "<2-LeftMouse>" },
+    open = "o",
+    remove = "d",
+    repl = "r",
+    toggle = "t"
+  },
+  render = {
+    indent = 1,
+    max_value_lines = 100
+  }
+});
+EOF
+
 
 " set Python
 let g:python3_host_prog  = expand('~/.asdf/shims/python')
@@ -244,7 +319,7 @@ nnoremap <space>o :call TODO()<CR>
 
 " Debugger maps
 nnoremap <silent> <leader><leader>D :lua require("dapui").open()<CR>
-nnoremap <silent> <leader><leader>C :lua require("dapui").close()<CR>
+nnoremap <silent> <leader><leader>C :exec 'lua require("dapui").close()'<CR>
 nnoremap <silent> <leader><leader>T :lua require("dapui").toggle()<CR>
 nnoremap <silent> <F6> :lua require'dap'.continue()<CR>
 nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>
