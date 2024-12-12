@@ -45,6 +45,7 @@ Plug 'dzeban/vim-log-syntax'
 Plug 'stephpy/vim-yaml'
 Plug 'vim-scripts/dbext.vim'
 Plug 'nvim-neotest/nvim-nio'
+Plug 'nvim-lua/plenary.nvim'
 
 " Debugger
 Plug 'mfussenegger/nvim-dap'
@@ -53,6 +54,7 @@ Plug 'rcarriga/nvim-dap-ui'
 
 " Other languages
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'pmizio/typescript-tools.nvim'
 
 " After lsp with neovim 0.5.0
 " Collection of common configurations for the Nvim LSP client
