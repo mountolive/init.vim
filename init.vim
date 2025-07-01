@@ -152,8 +152,16 @@ EOF
 
 
 " set Python
-let g:python3_host_prog  = expand('~/.asdf/shims/python')
-let g:python_host_prog  = expand('~/.asdf/shims/python2')
+if has('macunix')
+  " macOS-specific settings
+  let g:python3_host_prog  = expand('/opt/homebrew/bin/python3')
+elseif has('unix')
+  " Linux-specific settings
+  let g:python3_host_prog  = expand('~/.asdf/shims/python3')
+  let g:python_host_prog  = expand('~/.asdf/shims/python2')
+  set termencoding=utf-8
+  set pastetoggle=<F12>
+endif
 
 
 if $TERM =~ '256'
@@ -347,7 +355,6 @@ set diffopt+=vertical
 set shell=/bin/bash
 scriptencoding utf-8
 set encoding=utf-8
-set termencoding=utf-8
 set clipboard=unnamed
 set clipboard+=unnamedplus
 filetype plugin indent on " Do filetype detection and load custom file plugins and indent files
@@ -358,7 +365,6 @@ set laststatus=2          " When you go into insert mode,
 
 " Display options
 syntax on
-set pastetoggle=<F12>
 set nocursorline
 set number
 set list!                       " Display unprintable characters
