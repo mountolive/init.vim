@@ -84,7 +84,8 @@ nvim_lsp.gopls.setup{
       analyses = {
         unusedparams = true,
         -- shadow = true,
-        fieldalignment = true,
+        -- removed
+        -- fieldalignment = true,
         unusedwrite = true,
         fillstruct = false,
       },

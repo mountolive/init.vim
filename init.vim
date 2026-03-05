@@ -2,19 +2,12 @@ let os = substitute(system('uname'), "\n", "", "")
 
 call plug#begin('~/.nvim/plugged')
 
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-
 Plug 'preservim/nerdtree'
 Plug 'morhetz/gruvbox'
 Plug 'chusiang/vim-sdcv' " How to install dict see https://askubuntu.com/questions/191125/is-there-an-offline-command-line-dictionary
 Plug 'kassio/neoterm'
 Plug 'janko-m/vim-test'
 Plug 'benekastah/neomake'
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'Shougo/neco-syntax'
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'itchyny/lightline.vim'
 Plug 'shinchu/lightline-gruvbox.vim'
@@ -27,7 +20,6 @@ Plug 'othree/eregex.vim'
 Plug 'othree/html5.vim'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
-Plug 'Shougo/neco-syntax'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -151,19 +143,6 @@ require("dapui").setup({
 EOF
 
 
-" set Python
-if has('macunix')
-  " macOS-specific settings
-  let g:python3_host_prog  = expand('/opt/homebrew/bin/python3')
-elseif has('unix')
-  " Linux-specific settings
-  let g:python3_host_prog  = expand('~/.asdf/shims/python3')
-  let g:python_host_prog  = expand('~/.asdf/shims/python2')
-  set termencoding=utf-8
-  set pastetoggle=<F12>
-endif
-
-
 if $TERM =~ '256'
   set termguicolors " true colors
   set t_Co=256
@@ -248,14 +227,6 @@ let g:rustfmt_autosave = 1
 
 " Closing after autocomplete
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-" Neocomplete Settings
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#disable_auto_complete=1
-inoremap <expr><Tab> pumvisible() ? "\<C-Space>" : neocomplete#start_manual_complete()
 
 " Toggle terminal on/off (neovim)
 nnoremap <c-y> :call TermToggle(12)<CR>
@@ -487,22 +458,6 @@ cnoreabbrev f Ack! -Q
 if executable('ag')
   let g:ackprg = 'ag --vimgrep --smart-case'
 endif
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#source('_', 'max_candidates', 3)
-call deoplete#custom#source('buffer', 'rank', 501)
-call deoplete#custom#source('buffer', 'max_candidates', 2)
-
-" use tab
-imap <silent><expr> <TAB>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
 
 " For clang with
 let g:clang_complete_auto = 0
