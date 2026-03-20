@@ -539,6 +539,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+autocmd BufWritePre *.md call FormatMarkdown()
 
 " Turn on spellcheck
 autocmd Filetype gitcommit,markdown,note setlocal spell textwidth=72
@@ -738,6 +739,15 @@ function! s:CloseIfOnlyControlWinLeft()
         \ || &buftype == 'quickfix'
         q
     endif
+endfunction
+
+function! FormatMarkdown()
+  let l:save = winsaveview()
+  silent! execute '%!prettier --prose-wrap always --print-width 80 --parser markdown'
+  if v:shell_error
+    undo
+  endif
+  call winrestview(l:save)
 endfunction
 
 function! Refresh()

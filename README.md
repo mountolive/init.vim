@@ -1,74 +1,98 @@
-# NEOVIM config
+# Neovim Config
 
-I've use this config smoothly for Go, Ruby, Rust, Bash and Python
+I've used this config smoothly for Go, Ruby, Rust, Bash, Python and TypeScript.
 
-## Go
+## Quick Setup
+
+Run the setup script to install all prerequisites on a fresh system (macOS or Ubuntu-like Linux):
 
 ```bash
-go install golang.org/x/tools/gopls@latest
+./setup.sh
 ```
 
-## Bash
+After the script completes, open Neovim and run:
 
-`npm i -g bash-language-server`
-
-## Python
-
-`pip install pynvim flake8`
-
-when using pyright
-
-`npm i -g pyright`
-
-## Ruby
-
-`gem install neovim`
-
-## Rust
-
-### Ctags
-
-`brew install --HEAD universal-ctags/universal-ctags/universal-ctags`
-
-`cargo install rusty-tags`
-
-`rustup component add rust-src`
-
+```vim
+:PlugInstall
 ```
-// Add this to your ~/.*sh file
+
+## Prerequisites
+
+### Core
+
+| Dependency | Purpose |
+|---|---|
+| Neovim >= 0.10 | Editor |
+| [vim-plug](https://github.com/junegunn/vim-plug) | Plugin manager |
+| git | Plugin installation, version control |
+| Node.js / npm | LSP servers, prettier |
+| Go | gopls, delve |
+| Python 3 / pip | pynvim, pyright |
+| Ruby / gem | ruby-lsp |
+| Rust / cargo | rust-analyzer, rusty-tags |
+
+### CLI Tools
+
+| Tool | Purpose | Install |
+|---|---|---|
+| [ag](https://github.com/ggreer/the_silver_searcher) (silver searcher) | Fuzzy search, ack.vim | `brew install the_silver_searcher` / `apt install silversearcher-ag` |
+| [fzf](https://github.com/junegunn/fzf) | Fuzzy file finder | Installed automatically by vim-plug |
+| [jq](https://github.com/jqlang/jq) | JSON formatting (`,Z`) | `brew install jq` / `apt install jq` |
+| [prettier](https://prettier.io/) | Markdown formatting on save | `npm install -g prettier` |
+| [universal-ctags](https://github.com/universal-ctags/ctags) | Tag generation | `brew install --HEAD universal-ctags/universal-ctags/universal-ctags` / build from source |
+
+### LSP Servers
+
+| Server | Language | Install |
+|---|---|---|
+| [gopls](https://pkg.go.dev/golang.org/x/tools/gopls) | Go | `go install golang.org/x/tools/gopls@latest` |
+| [delve](https://github.com/go-delve/delve) | Go (debugger) | `go install github.com/go-delve/delve/cmd/dlv@latest` |
+| [pyright](https://github.com/microsoft/pyright) | Python | `npm install -g pyright` |
+| [bash-language-server](https://github.com/bash-lsp/bash-language-server) | Bash | `npm install -g bash-language-server` |
+| [rust-analyzer](https://rust-analyzer.github.io/) | Rust | `rustup component add rust-analyzer` |
+| [ruby-lsp](https://github.com/Shopify/ruby-lsp) | Ruby | `gem install ruby-lsp` |
+| typescript-tools.nvim | TypeScript | Bundled as Neovim plugin |
+
+### Python
+
+```bash
+pip install pynvim
+```
+
+### Ruby
+
+```bash
+gem install neovim ruby-lsp
+```
+
+### Rust Extras
+
+For ctags support in Rust projects:
+
+```bash
+cargo install rusty-tags
+rustup component add rust-src
+```
+
+Add to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+
+```bash
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library/
-
-// And source it
 ```
 
-Create `~/.rusty-tags/config.toml`
+Create `~/.rusty-tags/config.toml`:
 
-And add:
-
-```
-# the file name used for vi tags
+```toml
 vi_tags = ".rstags"
-
-# the file name used for emacs tags
 emacs_tags = "rusty-tags.emacs"
-
-# the name or path to the ctags executable, by default executables with names
-# are searched in the following order: "ctags", "exuberant-ctags", "exctags", "universal-ctags", "uctags"
 ctags_exe = ""
-
-# options given to the ctags executable
 ctags_options = ""
 ```
 
-_NOTE:_ remember to add `*/.*tags` to your `.gitignore`
+Remember to add `*.*tags` to your `.gitignore`.
 
-### TreeSitter [this](https://github.com/nvim-treesitter/nvim-treesitter)
+### TreeSitter
 
-I've set this one mainly to provide nice highlighting
-
-Once installed, remember to add support for the languages you need.
-
-for example:
-```
-:TSInstall go
-```
+Treesitter parsers are installed automatically on startup for: bash, css, go, gomod,
+gosum, html, javascript, json, lua, markdown, python, ruby, rust, toml, typescript,
+tsx, vim, vimdoc, yaml.
