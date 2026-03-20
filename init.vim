@@ -26,7 +26,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars'
-Plug 'SirVer/ultisnips'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
 Plug 'honza/vim-snippets'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rhysd/vim-grammarous'
@@ -465,10 +465,6 @@ let g:clang_auto_select = 0
 let g:clang_omnicppcomplete_compliance = 0
 let g:clang_make_default_keymappings = 0
 let g:clang_library_path = '/usr/local/opt/llvm/lib'
-
-" Ultisnip
-let g:UltiSnipsExpandTrigger="<C-j>"
-let g:UltiSnipsSnippetsDir="~/.config/nvim/UltiSnips"
 
 " Notes
 let g:notes_directories = ['~/notes']
