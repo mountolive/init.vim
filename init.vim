@@ -28,6 +28,7 @@ Plug 'mileszs/ack.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
 Plug 'honza/vim-snippets'
+Plug 'jiangmiao/auto-pairs'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'rhysd/vim-grammarous'
 Plug 'cespare/vim-toml'
