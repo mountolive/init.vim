@@ -134,6 +134,21 @@ if ts_ok then
 end
 
 require("dapui").setup({
+  controls = {
+    element = "repl",
+    enabled = true,
+    icons = {
+      disconnect = "disc",
+      pause = "pause",
+      play = "play",
+      run_last = "run last",
+      step_back = "back",
+      step_into = "into",
+      step_out = "out",
+      step_over = "over",
+      terminate = "terminate",
+    },
+  },
   icons = { expanded = "▾", collapsed = "▸" },
   mappings = {
     expand = { "<CR>", "<2-LeftMouse>" },
@@ -141,33 +156,67 @@ require("dapui").setup({
     remove = "d",
     edit = "e",
     repl = "r",
+    toggle = "t",
   },
-  sidebar = {
-    elements = {
-      {
-        id = "scopes",
-        size = 0.50,
+  expand_lines = true,
+  force_buffers = true,
+  layouts = {
+    {
+      elements = {
+        { id = "scopes", size = 0.25 },
+        { id = "breakpoints", size = 0.25 },
+        { id = "stacks", size = 0.25 },
+        { id = "watches", size = 0.25 },
       },
-      { id = "breakpoints", size = 0.25 },
-      { id = "stacks", size = 0.25 },
+      position = "right",
+      size = 40,
     },
-    size = 80,
-    position = "right",
-  },
-  tray = {
-    elements = { "repl" },
-    size = 10,
-    position = "bottom",
+    {
+      elements = {
+        { id = "repl", size = 0.5 },
+        { id = "console", size = 0.5 },
+      },
+      position = "bottom",
+      size = 15,
+    },
   },
   floating = {
-    max_height = nil,
-    max_width = nil,
     border = "single",
     mappings = {
       close = { "q", "<Esc>" },
     },
   },
-  windows = { indent = 1 },
+  render = {
+    indent = 1,
+    max_value_lines = 100,
+  },
+})
+
+local dap, dapui = require("dap"), require("dapui")
+
+dap.listeners.after.event_initialized["dapui_autoopen"] = function()
+  dapui.open()
+end
+
+local function delete_dap_buffers()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      local name = vim.api.nvim_buf_get_name(buf)
+      local ft = vim.bo[buf].filetype
+      if name:match("%[dap%-terminal%]") or name:match("DAP ") or ft == "dap-repl" then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      end
+    end
+  end
+end
+
+function DapCloseAll()
+  dapui.close()
+  delete_dap_buffers()
+end
+
+vim.api.nvim_create_autocmd("QuitPre", {
+  callback = delete_dap_buffers,
 })
 
 local ok, ls = pcall(require, "luasnip")
