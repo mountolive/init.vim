@@ -235,9 +235,10 @@ nnoremap <silent> <F8> :lua require'dap'.step_over()<CR>
 nnoremap <silent> <F9> :lua require'dap'.step_into()<CR>
 nnoremap <silent> <F12> :lua require'dap'.step_out()<CR>
 nnoremap <silent> <leader><leader>b :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader><leader>B :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
 nnoremap <silent> <leader><leader>r :lua require'dap'.repl.open()<CR>
 nnoremap <silent> <leader><leader>l :lua require'dap'.run_last()<CR>
-nnoremap <silent> <F2> :lua require('dap-go').debug_test()<CR>
+nnoremap <silent> <F2> :if &filetype ==# 'nerdtree' <bar> wincmd p <bar> endif <bar> lua require('dap-go').debug_test()<CR>
 
 
 
