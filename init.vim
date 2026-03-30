@@ -57,7 +57,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
 
 " Autocompletion framework for built-in LSP
-Plug 'nvim-lua/completion-nvim'
+" Plug 'nvim-lua/completion-nvim' " replaced by Neovim 0.11 built-in vim.lsp.completion
 
 " Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -282,7 +282,7 @@ set hidden                         " Don't abandon buffers moved to the backgrou
 set wildmenu                       " Enhanced completion hints in command line
 set backspace=eol,start,indent     " Allow backspacing over indent, eol, & start
 set complete=.,w,b,u,U,t,i,d       " Do lots of scanning on tab completion
-set completeopt-=preview           " Do not show preview window, just the menu
+set completeopt=menuone,noinsert,noselect
 set directory=~/.config/nvim/swap  " Directory to use for the swap file
 set diffopt=filler,iwhite          " In diff mode, ignore whitespace changes and align unchanged lines
 set nowrap

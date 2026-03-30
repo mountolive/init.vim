@@ -9,6 +9,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local bufnr = args.buf
 
     vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
     local function map(mode, lhs, rhs)
       vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, noremap = true, silent = true })
