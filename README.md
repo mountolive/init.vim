@@ -42,13 +42,15 @@ Then open Neovim and run:
 | Neovim >= 0.10 | Editor |
 | [vim-plug](https://github.com/junegunn/vim-plug) | Plugin manager |
 | git | Plugin installation, version control |
+| [Cursor](https://cursor.com) | AI editor (`<C-t>` terminal for the agent CLI) |
+| [Cursor CLI](https://cursor.com/docs/cli/overview) | Agent in terminal (`cursor-agent`) |
 | [asdf](https://asdf-vm.com/) | Runtime version manager (Node.js, Python, Ruby, .NET) |
 | Node.js / npm | LSP servers, prettier |
 | Go | gopls, delve |
 | Python 3 / pip | pynvim, pyright |
 | Ruby (latest 3.x) / gem | ruby-lsp |
 | Rust / cargo | rust-analyzer, rusty-tags |
-| .NET SDK | C# / OmniSharp LSP |
+| .NET SDK | C# / csharp-ls LSP |
 
 ### CLI Tools
 

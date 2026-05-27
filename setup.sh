@@ -51,6 +51,41 @@ else
   sudo apt-get update -qq
 fi
 
+# ── Cursor app ───────────────────────────────────────────────────────
+if [[ "$OS" == "Darwin" ]]; then
+  if ! [[ -d "/Applications/Cursor.app" ]]; then
+    info "Installing Cursor..."
+    brew install --cask cursor || ERRORS+=("Cursor app (brew cask)")
+  else
+    info "Cursor already installed"
+  fi
+else
+  if ! command_exists cursor; then
+    info "Installing Cursor via snap..."
+    sudo snap install cursor --edge || ERRORS+=("Cursor app (snap)")
+  else
+    info "Cursor already installed"
+  fi
+fi
+
+# ── Cursor CLI (agent) ────────────────────────────────────────────────
+if ! command_exists cursor-agent && ! command_exists cursor; then
+  info "Installing Cursor CLI..."
+  (curl https://cursor.com/install -fsS | bash) || ERRORS+=("Cursor CLI (install script)")
+else
+  info "Cursor CLI already installed"
+fi
+
+if [[ "$OS" == "Darwin" ]]; then
+  CURSOR_CLI_CASK_DIR="$(find "$HOME/Library/Caches/Homebrew/Caskroom/cursor-cli" \
+    /usr/local/Caskroom/cursor-cli /opt/homebrew/Caskroom/cursor-cli \
+    -maxdepth 2 -name "dist-package" 2>/dev/null | head -1 || true)"
+  if [[ -n "$CURSOR_CLI_CASK_DIR" ]]; then
+    info "Removing quarantine from Cursor CLI dist-package..."
+    xattr -dr com.apple.quarantine "$CURSOR_CLI_CASK_DIR" 2>/dev/null || true
+  fi
+fi
+
 # ── Neovim ───────────────────────────────────────────────────────────
 if ! command_exists nvim; then
   info "Installing Neovim..."
