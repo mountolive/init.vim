@@ -161,6 +161,11 @@ nnoremap <c-y> :call TermToggle(12)<CR>
 inoremap <c-y> <Esc>:call TermToggle(12)<CR>
 tnoremap <c-y> <C-\><C-n>:call TermToggle(12)<CR>
 
+" Toggle Cursor CLI terminal in a vertical split on the right
+nnoremap <c-t> :call CursorTermToggle(80)<CR>
+inoremap <c-t> <Esc>:call CursorTermToggle(80)<CR>
+tnoremap <c-t> <C-\><C-n>:call CursorTermToggle(80)<CR>
+
 " Terminal go back to normal mode
 tnoremap <Esc> <C-\><C-n>
 tnoremap :q! <C-\><C-n>:q!<CR>
@@ -634,6 +639,8 @@ endfunction
 " Terminal Function
 let g:term_buf = 0
 let g:term_win = 0
+let g:cursor_term_buf = 0
+let g:cursor_term_win = 0
 function! TermToggle(height)
     if win_gotoid(g:term_win)
         hide
@@ -651,6 +658,26 @@ function! TermToggle(height)
         endtry
         startinsert!
         let g:term_win = win_getid()
+    endif
+endfunction
+
+function! CursorTermToggle(width)
+    if win_gotoid(g:cursor_term_win)
+        hide
+    else
+        botright vnew
+        exec "vertical resize " . a:width
+        try
+            exec "buffer " . g:cursor_term_buf
+        catch
+            call termopen($SHELL, {"detach": 0})
+            let g:cursor_term_buf = bufnr("")
+            set nonumber
+            set norelativenumber
+            set signcolumn=no
+        endtry
+        startinsert!
+        let g:cursor_term_win = win_getid()
     endif
 endfunction
 
