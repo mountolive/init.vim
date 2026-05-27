@@ -1,6 +1,6 @@
 # Neovim Config
 
-I've used this config smoothly for Go, Ruby, Rust, Bash, Python and TypeScript.
+I've used this config smoothly for Go, Ruby, Rust, Bash, Python, TypeScript and C#.
 
 ## Quick Setup
 
@@ -10,7 +10,24 @@ Run the setup script to install all prerequisites on a fresh system (macOS or Ub
 ./setup.sh
 ```
 
-After the script completes, open Neovim and run:
+The script installs [asdf](https://asdf-vm.com/) and uses it to manage Node.js, Python, Ruby (latest 3.x), and the .NET SDK, setting each as the global version. It also appends the asdf init line to `~/.zshrc` automatically.
+
+After the script completes, reload your shell so the asdf shims take effect:
+
+```bash
+source ~/.zshrc
+```
+
+Then verify the managed runtimes are active:
+
+```bash
+which ruby    # should point to ~/.asdf/shims/ruby
+which python  # should point to ~/.asdf/shims/python
+which node    # should point to ~/.asdf/shims/node
+which dotnet  # should point to ~/.asdf/shims/dotnet
+```
+
+Then open Neovim and run:
 
 ```vim
 :PlugInstall
@@ -25,11 +42,13 @@ After the script completes, open Neovim and run:
 | Neovim >= 0.10 | Editor |
 | [vim-plug](https://github.com/junegunn/vim-plug) | Plugin manager |
 | git | Plugin installation, version control |
+| [asdf](https://asdf-vm.com/) | Runtime version manager (Node.js, Python, Ruby, .NET) |
 | Node.js / npm | LSP servers, prettier |
 | Go | gopls, delve |
 | Python 3 / pip | pynvim, pyright |
-| Ruby / gem | ruby-lsp |
+| Ruby (latest 3.x) / gem | ruby-lsp |
 | Rust / cargo | rust-analyzer, rusty-tags |
+| .NET SDK | C# / OmniSharp LSP |
 
 ### CLI Tools
 
@@ -51,6 +70,7 @@ After the script completes, open Neovim and run:
 | [bash-language-server](https://github.com/bash-lsp/bash-language-server) | Bash | `npm install -g bash-language-server` |
 | [rust-analyzer](https://rust-analyzer.github.io/) | Rust | `rustup component add rust-analyzer` |
 | [ruby-lsp](https://github.com/Shopify/ruby-lsp) | Ruby | `gem install ruby-lsp` |
+| [csharp-ls](https://github.com/razzmatazz/csharp-language-server) | C# | `dotnet tool install --global csharp-ls` |
 | typescript-tools.nvim | TypeScript | Bundled as Neovim plugin |
 
 ### Python
