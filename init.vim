@@ -61,6 +61,7 @@ Plug 'nvim-lua/lsp_extensions.nvim'
 
 " Highlighting
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npm install', 'for': ['markdown'] }
 
 call plug#end()
 
@@ -303,6 +304,16 @@ autocmd InsertEnter * :call NumberToggle()
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FocusGained,BufEnter * call NERDTreeAutoRefresh()
+
+function! NERDTreeAutoRefresh()
+  if exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
+    let l:winnr = winnr()
+    NERDTreeFocus
+    execute 'normal R'
+    execute l:winnr . 'wincmd w'
+  endif
+endfunction
 
 
 " Indentation and tabbing
@@ -452,6 +463,8 @@ set wildignore+=*.png,*.jpg,*.otf,*.woff,*.jpeg,*.orig
 
 " Markdown
 let g:vim_markdown_folding_disabled=1
+let g:mkdp_auto_close = 1
+nnoremap <Leader>mp :MarkdownPreviewToggle<CR>
 
 " EasyMotion
 " Use uppercase target labels and type as a lower case
@@ -472,7 +485,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
 " Markdown
 autocmd BufRead,BufNewFile *.md setlocal textwidth=80
-autocmd BufWritePre *.md call FormatMarkdown()
+autocmd BufWritePre *.md call FormatMarkdownConfirm()
 
 " Turn on spellcheck
 autocmd Filetype gitcommit,markdown,note setlocal spell textwidth=72
@@ -704,6 +717,14 @@ function! FormatMarkdown()
   endif
   call winrestview(l:save)
 endfunction
+
+function! FormatMarkdownConfirm()
+  if confirm('Format with prettier?', "&Yes\n&No", 2) == 1
+    call FormatMarkdown()
+  endif
+endfunction
+
+nnoremap <Leader>mf :call FormatMarkdown()<CR>
 
 function! Refresh()
   set autoread
