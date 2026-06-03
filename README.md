@@ -33,6 +33,62 @@ Then open Neovim and run:
 :PlugInstall
 ```
 
+## WSL (Ubuntu)
+
+The setup script treats WSL Ubuntu as Linux (`uname -s` is `Linux`). Run it from inside your WSL distro:
+
+```bash
+cd /path/to/init.vim
+chmod +x setup.sh
+./setup.sh
+```
+
+Reload the shell after the script finishes (it appends asdf init to `~/.zshrc`):
+
+```bash
+source ~/.zshrc
+```
+
+If your default shell is **bash**, either switch to zsh or copy the asdf block from `~/.zshrc` into `~/.bashrc`, then run `source ~/.bashrc`.
+
+Verify asdf shims (same as macOS):
+
+```bash
+which ruby    # ~/.asdf/shims/ruby
+which python  # ~/.asdf/shims/python
+which node    # ~/.asdf/shims/node
+which dotnet  # ~/.asdf/shims/dotnet
+```
+
+Then in WSL: `nvim` and `:PlugInstall`.
+
+### What works well on WSL
+
+- `apt` packages: git, neovim, `ag`, `jq`, universal-ctags, and similar
+- asdf (cloned to `~/.asdf`) and runtimes: Node.js, Python, Ruby 3.x, .NET
+- Cursor CLI via the official install script
+- Symlink `~/.config/nvim` → this repo
+- Neovim and plugins inside WSL
+
+### Common WSL caveats
+
+| Step | On WSL |
+|------|--------|
+| **Cursor desktop app** | The script uses `snap install cursor --edge`. Snap is often missing or awkward in WSL. Use Cursor on Windows and the CLI inside WSL instead. |
+| **Go** | Not installed automatically on Linux. Install manually, e.g. `sudo snap install go --classic` or from [go.dev/dl](https://go.dev/dl/). |
+| **Ruby (psych)** | macOS installs `libyaml` via Homebrew; on Ubuntu you may need `sudo apt install -y libyaml-dev` before Ruby builds, then re-run setup or install Ruby via asdf again. |
+| **Neovim version** | `apt install neovim` may be older than 0.10 on some Ubuntu releases. Use a newer build (PPA, AppImage, or build from source) if LSP or treesitter misbehaves. |
+| **Markdown preview** | Opens a browser. Use WSLg, set `BROWSER` to a Windows browser, or preview from Windows. |
+| **sudo** | The script runs `sudo apt-get`; your WSL user needs sudo access. |
+
+### Suggested WSL workflow
+
+1. Run `./setup.sh` and read any failed steps printed at the end.
+2. Install Go yourself if you need Go LSP or debugging.
+3. If Ruby fails to build: `sudo apt install -y libyaml-dev`, then re-run setup or `asdf install ruby <version>`.
+4. Open Neovim in WSL and run `:PlugInstall`.
+5. Use **Cursor on Windows** for the GUI; use the **`<C-t>`** terminal in Neovim plus `cursor` / `cursor-agent` in WSL for the agent CLI.
+
 ## Prerequisites
 
 ### Core
