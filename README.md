@@ -4,13 +4,25 @@ I've used this config smoothly for Go, Ruby, Rust, Bash, Python, TypeScript and 
 
 ## Quick Setup
 
-Run the setup script to install all prerequisites on a fresh system (macOS or Ubuntu-like Linux):
+Run the setup script to install prerequisites on a fresh system (macOS or Ubuntu-like Linux):
 
 ```bash
 ./setup.sh
 ```
 
-The script installs [asdf](https://asdf-vm.com/) and uses it to manage Node.js, Python, Ruby (latest 3.x), and the .NET SDK, setting each as the global version. It also appends the asdf init line to `~/.zshrc` automatically.
+By default (interactive terminal), you choose which components to install. Skip languages you do not need (e.g. on WSL without Ruby):
+
+```bash
+./setup.sh --only nodejs,go,rust
+# or
+SETUP_LANGUAGES=nodejs,go,rust ./setup.sh
+```
+
+Components: `cursor`, `nodejs`, `python`, `go`, `ruby`, `dotnet`, `rust`. Always installed: git (with global `core.editor`, `core.autocrlf`, and aliases `rc` / `cb` / `cms`), Neovim, vim-plug, config symlink, and CLI tools (`ag`, `jq`, ctags).
+
+Interactive prompt: press Enter for all, enter numbers to **skip** (e.g. `4` skips ruby), or type names to install only those (e.g. `nodejs go rust`).
+
+The script installs [asdf](https://asdf-vm.com/) when a managed runtime is selected and appends asdf init to `~/.zshrc` and `~/.bashrc`.
 
 After the script completes, reload your shell so the asdf shims take effect:
 
@@ -43,13 +55,11 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-Reload the shell after the script finishes (it appends asdf init to `~/.zshrc`):
+Reload the shell after the script finishes:
 
 ```bash
-source ~/.zshrc
+source ~/.bashrc   # or source ~/.zshrc
 ```
-
-If your default shell is **bash**, either switch to zsh or copy the asdf block from `~/.zshrc` into `~/.bashrc`, then run `source ~/.bashrc`.
 
 Verify asdf shims (same as macOS):
 
@@ -83,11 +93,19 @@ Then in WSL: `nvim` and `:PlugInstall`.
 
 ### Suggested WSL workflow
 
-1. Run `./setup.sh` and read any failed steps printed at the end.
-2. Install Go yourself if you need Go LSP or debugging.
-3. If Ruby fails to build: `sudo apt install -y libyaml-dev`, then re-run setup or `asdf install ruby <version>`.
-4. Open Neovim in WSL and run `:PlugInstall`.
+1. Run with only what you need, e.g. `./setup.sh --only nodejs,go,rust` (skips ruby and dotnet).
+2. The script installs `build-essential`, `libicu-dev`, and other headers on Linux when those components are selected.
+3. Read any failed steps printed at the end and re-run after fixing apt packages.
+4. **Before `:PlugInstall`**, reload the shell so `npm` and `make` are on PATH (`source ~/.bashrc`). Exit status 127 on LuaSnip or markdown-preview usually means `make` or `npm` was missing in that session.
 5. Use **Cursor on Windows** for the GUI; use the **`<C-t>`** terminal in Neovim plus `cursor` / `cursor-agent` in WSL for the agent CLI.
+
+Example WSL install without Ruby or .NET:
+
+```bash
+./setup.sh --only nodejs,python,go,rust
+source ~/.bashrc
+nvim -c 'PlugInstall' -c qa
+```
 
 ## Prerequisites
 
