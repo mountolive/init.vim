@@ -85,6 +85,8 @@ set exrc " loads project spedific .nvimrc
 let mapleader=","
 inoremap jj <ESC>
 map <C-n> :NERDTreeToggle<CR>
+nnoremap <C-w>n :NERDTreeFocus<CR>
+tnoremap <C-w>n <C-\><C-n>:NERDTreeFocus<CR>
 map <Leader>r "hy:%S/<C-r>h//gc<left><left><left>
 map <Leader>f *
 map <Leader>w :w<CR>
