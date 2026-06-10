@@ -263,6 +263,20 @@ set diffopt+=vertical
 set shell=/bin/bash
 scriptencoding utf-8
 set encoding=utf-8
+if has('wsl')
+  let g:clipboard = {
+        \ 'name': 'WSLClipboard',
+        \ 'copy': {
+        \   '+': 'clip.exe',
+        \   '*': 'clip.exe',
+        \ },
+        \ 'paste': {
+        \   '+': 'powershell.exe -NoLogo -NoProfile -Command Get-Clipboard',
+        \   '*': 'powershell.exe -NoLogo -NoProfile -Command Get-Clipboard',
+        \ },
+        \ 'cache_enabled': 0,
+        \ }
+endif
 set clipboard=unnamed
 set clipboard+=unnamedplus
 filetype plugin indent on " Do filetype detection and load custom file plugins and indent files
@@ -738,6 +752,34 @@ augroup CloseIfOnlyControlWinLeft
     au!
     au BufEnter * call s:CloseIfOnlyControlWinLeft()
 augroup END
+
+if has('wsl')
+  function! NERDTreeCopyPath()
+    let l:nodePath = g:NERDTreeFileNode.GetSelected().path.str()
+    if executable('clip.exe')
+      call system('clip.exe', l:nodePath)
+      call nerdtree#echo('The path [' . l:nodePath . '] was copied to your clipboard.')
+    else
+      call nerdtree#echo('The full path is: ' . l:nodePath)
+    endif
+  endfunction
+
+  function! NERDTreeRevealFileLinux()
+    let l:node = g:NERDTreeFileNode.GetSelected()
+    if empty(l:node)
+      return
+    endif
+    let l:path = l:node.path.isDirectory ? l:node.path.str() : l:node.path.str()
+    let l:winpath = trim(system('wslpath -w ' . shellescape(l:path)))
+    if l:winpath !=# ''
+      if l:node.path.isDirectory
+        call system('explorer.exe ' . shellescape(l:winpath))
+      else
+        call system('explorer.exe /select,' . shellescape(l:winpath))
+      endif
+    endif
+  endfunction
+endif
 
 call NERDTreeHighlightFile('jade', 'green', 'none', 'green')
 call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow')

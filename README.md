@@ -98,6 +98,7 @@ Then in WSL: `nvim` and `:PlugInstall`.
 3. Read any failed steps printed at the end and re-run after fixing apt packages.
 4. **Before `:PlugInstall`**, reload the shell so `npm` and `make` are on PATH (`source ~/.bashrc`). Exit status 127 on LuaSnip or markdown-preview usually means `make` or `npm` was missing in that session.
 5. Use **Cursor on Windows** for the GUI; use the **`<C-t>`** terminal in Neovim plus `cursor` / `cursor-agent` in WSL for the agent CLI.
+6. NERDTree **`m` → `p`** (copy path) and **`m` → `r`** (reveal in file manager) use Windows `clip.exe` and `explorer.exe` via WSL — no extra packages needed.
 
 Example WSL install without Ruby or .NET:
 
