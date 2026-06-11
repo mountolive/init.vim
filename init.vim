@@ -256,6 +256,7 @@ nnoremap <silent> <F2> :if &filetype ==# 'nerdtree' <bar> wincmd p <bar> endif <
 
 " Misc
 set secure
+set autoread
 set lazyredraw
 set splitbelow
 set splitright
@@ -742,10 +743,20 @@ endfunction
 
 nnoremap <Leader>mf :call FormatMarkdown()<CR>
 
+function! s:AutoReloadCheck()
+  if &buftype !=# ''
+    return
+  endif
+  checktime
+endfunction
+
+augroup AutoReloadOnFocus
+  autocmd!
+  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * call s:AutoReloadCheck()
+augroup END
+
 function! Refresh()
-  set autoread
-  checkt
-  set autoread
+  checktime
 endfunction
 
 augroup CloseIfOnlyControlWinLeft
